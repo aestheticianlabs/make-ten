@@ -4,6 +4,7 @@ const GRID_WIDTH = 11,
 
 const dateDisplay = document.getElementById('date'),
 	scoreDisplay = document.getElementById('score'),
+	highScoreDisplay = document.getElementById('highScore'),
 	attemptsDisplay = document.getElementById('attempts'),
 	gameGrid = document.getElementById('game-grid'),
 	selectionRect = document.getElementById('selection-rect'),
@@ -13,6 +14,7 @@ const date = new Date();
 const dateSeed = new Date().setHours(0, 0, 0, 0);
 const lsKeyAttempts = "attempts";
 const lsKeyDate = "date";
+const lsKeyHighScore = "highScore";
 
 let rng;
 
@@ -22,6 +24,7 @@ let cells = [],
 	pointerDragging = false,
 	/** {Number} */
 	score = 0,
+	highScore = 0,
 	/** {Number} seconds */
 	remainingTime = 0,
 	timerInterval,
@@ -63,16 +66,19 @@ function resetGame() {
 	dateDisplay.textContent = date.toLocaleDateString();
 	scoreDisplay.textContent = (score = 0);
 
-	let attempts = localStorage.getItem(lsKeyAttempts) ?? 0;
 	let lastSaveDate = localStorage.getItem(lsKeyDate) ?? dateSeed;
-
 	if (lastSaveDate != dateSeed) {
-		attempts = 0
+		localStorage.removeItem(lsKeyAttempts);
+		localStorage.removeItem(lsKeyHighScore);
 	}
 
 	localStorage.setItem(lsKeyDate, dateSeed);
-	localStorage.setItem(lsKeyAttempts, ++attempts);
 
+	highScore = localStorage.getItem(lsKeyHighScore) ?? 0;
+	highScoreDisplay.textContent = highScore;
+
+	let attempts = localStorage.getItem(lsKeyAttempts) ?? 0;
+	localStorage.setItem(lsKeyAttempts, ++attempts);
 	attemptsDisplay.textContent = attempts;
 	
 	gameGrid.innerHTML = '';
@@ -109,6 +115,14 @@ function endGame() {
 			cells[y][x].disabled = true;
 		}
 	}
+
+	// set high score
+	if(score > highScore) {
+		highScore = score;
+		localStorage.setItem(lsKeyHighScore, highScore);
+		highScoreDisplay.textContent = highScore;
+	}
+
 }
 
 /**

@@ -61,6 +61,15 @@ button {
 		content: 'Score: ';
 	}
 
+#highScore {
+	color: #29adff;
+	font-size: 0.75rem;
+	margin-block-start: 0.5em;
+}
+	#highScore::before {
+		content: 'Best: ';
+	}
+
 #attempts {
 	color: #29adff;
 	font-size: 0.75rem;
