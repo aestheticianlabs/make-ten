@@ -2,12 +2,14 @@ const GRID_WIDTH = 11,
 	GRID_HEIGHT = 16,
 	TIME_LIMIT = 120; // 2 minutes in seconds.
 
-const scoreDisplay = document.getElementById('score'),
+const dateDisplay = document.getElementById('date'),
+	scoreDisplay = document.getElementById('score'),
 	gameGrid = document.getElementById('game-grid'),
 	selectionRect = document.getElementById('selection-rect'),
 	timeIndicator = document.getElementById('time-indicator');
 
-const seed = new Date().setHours(0, 0, 0, 0);
+const date = new Date();
+const seed = date.setHours(0, 0, 0, 0);
 
 let rng;
 
@@ -55,6 +57,7 @@ function init() {
 
 function resetGame() {
 	rng = Alea(seed);
+	dateDisplay.textContent = date.toLocaleDateString();
 	scoreDisplay.textContent = (score = 0);
 	
 	gameGrid.innerHTML = '';

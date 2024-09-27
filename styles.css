@@ -43,11 +43,19 @@ button {
 		cursor: not-allowed;
 	}
 
-#score {
+.top {
 	margin-block: 1em;
-	color: #29adff;
 	text-align: center;
 	text-transform: uppercase;
+}
+
+#date {
+	font-size: 0.75rem;
+	margin-block-start: 0.5em;
+}
+
+#score {
+	color: #29adff;
 }
 	#score::before {
 		content: 'Score: ';
