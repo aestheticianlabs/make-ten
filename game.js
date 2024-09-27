@@ -4,12 +4,15 @@ const GRID_WIDTH = 11,
 
 const dateDisplay = document.getElementById('date'),
 	scoreDisplay = document.getElementById('score'),
+	attemptsDisplay = document.getElementById('attempts'),
 	gameGrid = document.getElementById('game-grid'),
 	selectionRect = document.getElementById('selection-rect'),
 	timeIndicator = document.getElementById('time-indicator');
 
 const date = new Date();
-const seed = date.setHours(0, 0, 0, 0);
+const dateSeed = new Date().setHours(0, 0, 0, 0);
+const lsKeyAttempts = "attempts";
+const lsKeyDate = "date";
 
 let rng;
 
@@ -56,9 +59,21 @@ function init() {
 }
 
 function resetGame() {
-	rng = Alea(seed);
+	rng = Alea(dateSeed);
 	dateDisplay.textContent = date.toLocaleDateString();
 	scoreDisplay.textContent = (score = 0);
+
+	let attempts = localStorage.getItem(lsKeyAttempts) ?? 0;
+	let lastSaveDate = localStorage.getItem(lsKeyDate) ?? dateSeed;
+
+	if (lastSaveDate != dateSeed) {
+		attempts = 0
+	}
+
+	localStorage.setItem(lsKeyDate, dateSeed);
+	localStorage.setItem(lsKeyAttempts, ++attempts);
+
+	attemptsDisplay.textContent = attempts;
 	
 	gameGrid.innerHTML = '';
 	for (let y = 0; y < GRID_HEIGHT; y++) {

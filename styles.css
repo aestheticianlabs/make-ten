@@ -61,6 +61,15 @@ button {
 		content: 'Score: ';
 	}
 
+#attempts {
+	color: #29adff;
+	font-size: 0.75rem;
+	margin-block-start: 0.5em;
+}
+	#attempts::before {
+		content: 'Attempts: ';
+	}
+
 #time-indicator,
 #game-grid {
 	width: 100%;
