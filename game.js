@@ -7,6 +7,10 @@ const scoreDisplay = document.getElementById('score'),
 	selectionRect = document.getElementById('selection-rect'),
 	timeIndicator = document.getElementById('time-indicator');
 
+const seed = new Date().setHours(0, 0, 0, 0);
+
+let rng;
+
 	/** {Array<Array<HTMLButtonElement>>} */
 let cells = [],
 	/** {Boolean} */
@@ -19,6 +23,30 @@ let cells = [],
 	/** {Object<String,Number> */
 	selection;
 
+// Alea prng algorithm source: https://github.com/bryc/code/blob/master/jshash/PRNGs.md
+function Alea(seed) {
+	if (seed === undefined) { seed = +new Date() + Math.random(); }
+	function Mash() {
+		var n = 4022871197;
+		return function (r) {
+			for (var t, s, u = 0, e = 0.02519603282416938; u < r.length; u++)
+				s = r.charCodeAt(u), f = (e * (n += s) - (n * e | 0)),
+					n = 4294967296 * ((t = f * (e * n | 0)) - (t | 0)) + (t | 0);
+			return (n | 0) * 2.3283064365386963e-10;
+		}
+	}
+	return function () {
+		var m = Mash(), a = m(" "), b = m(" "), c = m(" "), x = 1, y;
+		seed = seed.toString(), a -= m(seed), b -= m(seed), c -= m(seed);
+		a < 0 && a++, b < 0 && b++, c < 0 && c++;
+		return function () {
+			var y = x * 2.3283064365386963e-10 + a * 2091639; a = b, b = c;
+			return c = y - (x = y | 0);
+		};
+	}();
+}
+
+
 function init() {
 	window.addEventListener('pointerup', handlePointerUp);
 	document.getElementById('restart-btn').addEventListener('click', resetGame);
@@ -26,6 +54,7 @@ function init() {
 }
 
 function resetGame() {
+	rng = Alea(seed);
 	scoreDisplay.textContent = (score = 0);
 	
 	gameGrid.innerHTML = '';
@@ -69,7 +98,7 @@ function endGame() {
  * @returns {HTMLButtonElement}
  */
 function createGridBtn() {
-	const value = Math.round(Math.random() * 8) + 1, // Random integer 1-9.
+	const value = Math.round(rng() * 8) + 1, // Random integer 1-9.
 		btn = document.createElement('button');
 	btn.textContent = value;
 	btn.numValue = value;
