@@ -46,4 +46,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: '{{ EVENT_PAYLOAD.repository.full_name }} has been upadated.'
+          args: '{{ url }} has been upadated.'
