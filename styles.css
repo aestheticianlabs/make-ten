@@ -61,8 +61,11 @@ button {
 		content: 'Score: ';
 	}
 
-#highScore {
+.blue {
 	color: #29adff;
+}
+
+#highScore {
 	font-size: 0.75rem;
 	margin-block-start: 0.5em;
 }
@@ -71,7 +74,6 @@ button {
 	}
 
 #attempts {
-	color: #29adff;
 	font-size: 0.75rem;
 	margin-block-start: 0.5em;
 }
@@ -79,11 +81,29 @@ button {
 		content: 'Attempts: ';
 	}
 
+#game-container {
+	position: relative;
+}
+
 #time-indicator,
-#game-grid {
+#game-container {
 	width: 100%;
 	max-width: 30rem; /* 480px default */
 	margin-inline: auto;
+}
+
+#game-over {
+	display: flex;
+	flex-direction: column; 
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	text-align: center;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.6);
 }
 
 #time-indicator {

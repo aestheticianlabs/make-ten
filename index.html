@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Make 10 Daily</title>
-		<meta name="viewport" content="width=device-width" />
-		<link rel="stylesheet" type="text/css" href="styles.css" />
-		<script defer src="game.js"></script>
-	</head>
-	<body>
-		<div class="top">
-			<div id="title">Make Ten Daily</div>
-			<div id="date"></div>
-		</div>
-		<div class="top">
-			<div id="score"></div>
-			<div id="highScore"></div>
-			<div id="attempts"></div>
-		</div>
+
+<head>
+	<title>Make 10 Daily</title>
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script defer src="game.js"></script>
+</head>
+
+<body>
+	<div class="top">
+		<div id="title">Make Ten Daily</div>
+		<div id="date"></div>
+	</div>
+	<div class="top blue">
+		<div id="score"></div>
+		<div id="highScore"></div>
+		<div id="attempts"></div>
+	</div>
+	<div id="game-container">
 		<div id="game-grid" touch-action="none">
 			<div id="selection-rect"></div>
 		</div>
-		<meter min="0" max="120" id="time-indicator"></meter>
-		<button id="restart-btn">Restart</button>
-		<footer>
-			With &lt;3 from <a href="https://aesthetic.games" target="_blank">Aesthetician Labs</a>
-			&nbsp;&middot;&nbsp;
-			Based on <a href="https://github.com/zmyaro/make-ten" target="_blank">zmyaro/make-ten</a>
-			&nbsp;&middot;&nbsp;
-			<a href="https://pancelor.itch.io/make-ten" target="_blank">Original by pancelor</a>
-			&nbsp;&middot;&nbsp;
-			<a href="https://github.com/zmyaro/make-ten" target="_blank">Source</a>
-		</footer>
-	</body>
+		<div id="game-over">
+			<h2 class="blue">Game Over</h2>
+			<button id="copy-btn">Copy Score</button>
+		</div>
+	</div>
+
+	<meter min="0" max="120" id="time-indicator"></meter>
+	<button id="restart-btn">Restart</button>
+	<footer>
+		With &lt;3 from <a href="https://aesthetic.games" target="_blank">Aesthetician Labs</a>
+		&nbsp;&middot;&nbsp;
+		Based on <a href="https://github.com/zmyaro/make-ten" target="_blank">zmyaro/make-ten</a>
+		&nbsp;&middot;&nbsp;
+		<a href="https://pancelor.itch.io/make-ten" target="_blank">Original by pancelor</a>
+		&nbsp;&middot;&nbsp;
+		<a href="https://github.com/zmyaro/make-ten" target="_blank">Source</a>
+	</footer>
+</body>
+
 </html>

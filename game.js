@@ -6,7 +6,10 @@ const dateDisplay = document.getElementById('date'),
 	scoreDisplay = document.getElementById('score'),
 	highScoreDisplay = document.getElementById('highScore'),
 	attemptsDisplay = document.getElementById('attempts'),
+	gameContainer = document.getElementById('game-container'),
 	gameGrid = document.getElementById('game-grid'),
+	gameOver = document.getElementById('game-over'),
+	copyButton = document.getElementById('copy-btn'),
 	selectionRect = document.getElementById('selection-rect'),
 	timeIndicator = document.getElementById('time-indicator');
 
@@ -58,13 +61,17 @@ function Alea(seed) {
 function init() {
 	window.addEventListener('pointerup', handlePointerUp);
 	document.getElementById('restart-btn').addEventListener('click', resetGame);
+	copyButton.addEventListener('pointerdown', copyScore);
 	resetGame();
 }
 
 function resetGame() {
+
 	rng = Alea(dateSeed);
 	dateDisplay.textContent = date.toLocaleDateString();
 	scoreDisplay.textContent = (score = 0);
+
+	gameContainer.removeChild(gameOver);
 
 	let lastSaveDate = localStorage.getItem(lsKeyDate) ?? dateSeed;
 	if (lastSaveDate != dateSeed) {
@@ -110,11 +117,14 @@ function endGame() {
 		selection = undefined;
 		gameGrid.removeChild(selectionRect);
 	}
+
 	for (let y = 0; y < GRID_HEIGHT; y++) {
 		for (let x = 0; x < GRID_WIDTH; x++) {
 			cells[y][x].disabled = true;
 		}
 	}
+
+	gameContainer.appendChild(gameOver);
 
 	// set high score
 	if(score > highScore) {
@@ -224,6 +234,19 @@ function handlePointerUp(ev) {
 	// Clear the selection.
 	selection = undefined;
 	gameGrid.removeChild(selectionRect);
+}
+
+let textResetTimeout;
+function copyScore(e) { 
+	navigator.clipboard.writeText(`Make Ten Daily - ${dateDisplay.textContent}
+Score: ${score}
+Best: ${highScore}
+Attempts: ${attemptsDisplay.textContent}
+`);
+
+	copyButton.textContent = "Copied!";
+	window.clearTimeout(textResetTimeout);
+	textResetTimeout = window.setTimeout(() => copyButton.textContent = "Copy Score", 2500);
 }
 
 window.addEventListener('DOMContentLoaded', init);
