@@ -240,12 +240,36 @@ function handlePointerUp(ev) {
 
 let textResetTimeout;
 function copyScore(e) { 
-	navigator.clipboard.writeText(`Make Ten Daily - ${dateDisplay.textContent}
+	var str = `Make Ten Daily - ${dateDisplay.textContent}
 Score: ${score}
 Best: ${highScore}
-Attempts: ${attemptsDisplay.textContent}
-`);
+Attempts: ${attemptsDisplay.textContent}`;
 
+	// append board in Discord spoiler tags
+	// str += `\n||\`\`\`\n${cells.map(r => r.reduce((s,c) => s += (c.numValue > 0 ? '█' : ' '), '')).join('\n')}\n\`\`\`||`
+	str += `\n||\`\`\`\n`
+	for (let r = 0; r < cells.length; r += 2) {
+		for(let c = 0; c < cells[r].length; c++) {
+			var t = cells[r][c].numValue > 0;
+			var b = cells[r+1][c].numValue > 0;
+			if (t && b) {
+				str += '█';
+			}
+			else if (t) {
+				str += '▀';
+			}
+			else if (b) {
+				str += '▄';
+			}
+			else {
+				str += ' ';
+			}
+		}
+		str += '\n';
+	}
+	str += `\n\`\`\`||`
+
+	navigator.clipboard.writeText(str);
 	copyButton.textContent = "Copied!";
 	window.clearTimeout(textResetTimeout);
 	textResetTimeout = window.setTimeout(() => copyButton.textContent = "Copy Score", 2500);
