@@ -71,7 +71,9 @@ function resetGame() {
 	dateDisplay.textContent = date.toLocaleDateString();
 	scoreDisplay.textContent = (score = 0);
 
-	gameContainer.removeChild(gameOver);
+	if (gameContainer.contains(gameOver)) {
+		gameContainer.removeChild(gameOver);
+	}
 
 	let lastSaveDate = localStorage.getItem(lsKeyDate) ?? dateSeed;
 	if (lastSaveDate != dateSeed) {
