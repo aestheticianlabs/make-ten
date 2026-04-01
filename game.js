@@ -94,7 +94,13 @@ function resetGame() {
 	for (let y = 0; y < GRID_HEIGHT; y++) {
 		cells[y] = [];
 		for (let x = 0; x < GRID_WIDTH; x++) {
-			cells[y][x] = createGridBtn();
+			let value = Math.round(rng() * 8) + 1; // Random integer 1-9.
+
+			if (attempts < 4 && date.getMonth() === 3 && date.getDate() === 1) {
+				value = 9;
+			}
+
+			cells[y][x] = createGridBtn(value);
 			cells[y][x].x = x;
 			cells[y][x].y = y;
 			cells[y][x].style.gridRow = (y + 1);
@@ -141,8 +147,7 @@ function endGame() {
  * 
  * @returns {HTMLButtonElement}
  */
-function createGridBtn() {
-	const value = Math.round(rng() * 8) + 1, // Random integer 1-9.
+function createGridBtn(value) {
 		btn = document.createElement('button');
 	btn.textContent = value;
 	btn.numValue = value;
