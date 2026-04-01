@@ -96,8 +96,8 @@ function resetGame() {
 		for (let x = 0; x < GRID_WIDTH; x++) {
 			let value = Math.round(rng() * 8) + 1; // Random integer 1-9.
 
-			if (attempts < 4 && date.getMonth() === 3 && date.getDate() === 1) {
-				value = 9;
+			if (attempts < 5 && date.getMonth() === 3 && date.getDate() === 1) {
+				value = 10-attempts;
 			}
 
 			cells[y][x] = createGridBtn(value);
